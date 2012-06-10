@@ -61,8 +61,7 @@ AWSRestSigner.prototype.extractSubResources = function(queryString) {
 }
 
 AWSRestSigner.prototype.sign = function(what) {
-	var date = what.date || new Date().toUTCString();
-	return this._sign(what.method, what.bucket, what.path, date, what.contentType, what.contentMd5, what.xAmzHeaders);
+	return this._sign(what.method, what.bucket, what.path, what.date, what.contentType, what.contentMd5, what.xAmzHeaders);
 }
 
 AWSRestSigner.prototype._sign = function(method, bucket, path, date, contentType, contentMd5, xAmzHeaders) {

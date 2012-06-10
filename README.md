@@ -11,11 +11,13 @@ var signer = new AwsSign({
 	secretAccessKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
 });
 
+var date = new Date().toUTCString();
+
 var authorization = signer.sign({
 	method: 'PUT', 
 	bucket: 'johnsmith', 
 	path: '/photos/puppy.jpg',  
-	date: 'Tue, 27 Mar 2007 19:36:42 +0000', 
+	date: date,
 	contentType: 'image/puppy',
 	contentMd5: null, 
 	xAmzHeaders: {}
@@ -27,8 +29,9 @@ The following keys are mandatory:
 * `method`
 * `bucket`
 * `path`
+* `date`
 
-Others are optional. `Date` is set to current date if not specified.
+Others are optional. Note that you have to supply the same date to `signer.sign()` and in the http request headers. 
 
 ## Non-goals
 
