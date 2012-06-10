@@ -4,21 +4,23 @@ Simple module to calculate `Authorization` header for Amazon AWS REST requests.
 
 Simple it is: 
 	
-	var AwsSign = require('aws-sign');
-	var signer = new AwsSign({ 
-		accessKeyId: 'AKIAIOSFODNN7EXAMPLE',
-		secretAccessKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
-	});
-	
-	var authorization = signer.sign({
-		method: 'PUT', 
-		bucket: 'johnsmith', 
-		path: '/photos/puppy.jpg',  
-		date: 'Tue, 27 Mar 2007 19:36:42 +0000', 
-		contentType: 'image/puppy',
-		contentMd5: null, 
-		xAmzHeaders: {}
-	});
+```javascript
+var AwsSign = require('aws-sign');
+var signer = new AwsSign({ 
+	accessKeyId: 'AKIAIOSFODNN7EXAMPLE',
+	secretAccessKey: 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY'
+});
+
+var authorization = signer.sign({
+	method: 'PUT', 
+	bucket: 'johnsmith', 
+	path: '/photos/puppy.jpg',  
+	date: 'Tue, 27 Mar 2007 19:36:42 +0000', 
+	contentType: 'image/puppy',
+	contentMd5: null, 
+	xAmzHeaders: {}
+});
+```
 	
 The following keys are mandatory: 
 
