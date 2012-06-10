@@ -45,6 +45,14 @@ Use a single header instead:
 
 	X-Amz-Meta-ReviewedBy: joe@johnsmith.net,jane@johnsmith.net
 
+## Testing
+
+	nodeunit test/
+	
+## Installation
+
+	npm install aws-sign
+
 ## Author
 
 Egor Egorov, me@egorfine.com.
