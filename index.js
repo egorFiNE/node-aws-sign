@@ -60,9 +60,27 @@ AWSRestSigner.prototype.extractSubResources = function(queryString) {
 	return '';
 }
 
-AWSRestSigner.prototype.sign = function(what) {
-	return this._sign(what.method, what.bucket, what.path, what.date, what.contentType, what.contentMd5, what.xAmzHeaders);
+AWSRestSigner.prototype.sign = function(opts) {
+	var method = opts.method;
+	var bucket = opts.host.match(/^(.*)\.s3\.amazonaws\.com/)[1];
+	var path = opts.path;
+	var xAmzHeaders = {};
+	var date, contentType, contentMd5;
+	if(!opts.headers) opts.headers = {};
+	Object.keys(opts.headers).forEach(function(key) {
+		switch(key.toLowerCase()) {
+			case "date": date = opts.headers[key]; break;
+			case "content-type": contentType = opts.headers[key]; break;
+			case "content-md5": contentMd5 = opts.headers[key]; break;
+			default:
+				if("x-amz-" === key.slice(0, 6)) xAmzHeaders[key] = opts.headers[key];
+				break;
+		}
+	});
+	if(!date) date = opts.headers.date = new Date().toUTCString();
+	opts.headers["Authorization"] = this._sign(method, bucket, path, date, contentType, contentMd5, xAmzHeaders);
 }
+
 
 AWSRestSigner.prototype._sign = function(method, bucket, path, date, contentType, contentMd5, xAmzHeaders) {
 	var qPos = path.indexOf('?'), queryToSign='';
