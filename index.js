@@ -66,18 +66,34 @@ AWSRestSigner.prototype.sign = function(opts) {
 	var path = opts.path;
 	var xAmzHeaders = {};
 	var date, contentType, contentMd5;
-	if(!opts.headers) opts.headers = {};
+
+	if (!opts.headers) {
+		opts.headers = {};
+	}
+
 	Object.keys(opts.headers).forEach(function(key) {
 		switch(key.toLowerCase()) {
-			case "date": date = opts.headers[key]; break;
-			case "content-type": contentType = opts.headers[key]; break;
-			case "content-md5": contentMd5 = opts.headers[key]; break;
+			case "date": 
+				date = opts.headers[key]; 
+				break;
+			case "content-type": 
+				contentType = opts.headers[key]; 
+				break;
+			case "content-md5": 
+				contentMd5 = opts.headers[key]; 
+				break;
 			default:
-				if("x-amz-" === key.slice(0, 6)) xAmzHeaders[key] = opts.headers[key];
+				if("x-amz-" === key.slice(0, 6)) {
+					xAmzHeaders[key] = opts.headers[key];
+				}
 				break;
 		}
 	});
-	if(!date) date = opts.headers.date = new Date().toUTCString();
+
+	if(!date) {
+		date = opts.headers.date = new Date().toUTCString();
+	}
+	
 	opts.headers["Authorization"] = this._sign(method, bucket, path, date, contentType, contentMd5, xAmzHeaders);
 }
 
