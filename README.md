@@ -25,10 +25,10 @@ https.request(opts, ...);
 The following keys are mandatory: 
 
 * `method`
-* `bucket`
+* `host`
 * `path`
 
-Others are optional. A date header will be added for you if it is not already set.
+Others are optional. A date header (`headers.date`) will be added for you if it is not already set.
 
 ## Non-goals
 
@@ -45,6 +45,46 @@ Use a single header instead:
 
 	X-Amz-Meta-ReviewedBy: joe@johnsmith.net,jane@johnsmith.net
 
+## 0.0.x to 0.1.x migration guide
+
+0.1.x supports the same options as http.request (thanks to Ben Trask). 
+
+Before:
+
+```javascript
+	auth = signer.sign({
+		method: 'PUT', 
+		bucket: 'johnsmith', 
+		path: '/photos/puppy.jpg', 
+		date: 'Tue, 27 Mar 2007 21:15:45 +0000', 
+		contentType: 'image/jpeg'
+	});
+	http.request({
+		…
+		headers: {
+			…,
+			Authorization: auth
+		}
+	});
+```
+
+After: 
+
+```javascript
+	var opts = {
+		method: 'PUT', 
+		host: 'johnsmith.s3.amazonaws.com',
+		path: '/photos/puppy.jpg', 
+		headers: {
+			date: 'Tue, 27 Mar 2007 21:15:45 +0000', 
+			contentType: 'image/jpeg'
+		}
+	};
+	signer.sign(opts);
+	http.request(opts);
+```
+
+
 ## Testing
 
 	nodeunit test/
@@ -59,4 +99,4 @@ Egor Egorov, me@egorfine.com.
 
 ## License
 
-MIT, of course. 
+MIT.

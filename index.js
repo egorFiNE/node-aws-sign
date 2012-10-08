@@ -61,18 +61,28 @@ AWSRestSigner.prototype.extractSubResources = function(queryString) {
 }
 
 AWSRestSigner.prototype.sign = function(opts) {
-	var method = opts.method;
-	var bucket = opts.host.match(/^(.*)\.s3\.amazonaws\.com/)[1];
-	var path = opts.path;
-	var xAmzHeaders = {};
-	var date, contentType, contentMd5;
+	var
+		method = opts.method,
+		host = opts.host || '',
+		path = opts.path,
+		xAmzHeaders = {},
+		date, contentType, contentMd5,
+		bucket = "";
+
+	var _match = host.match(/^(.*)\.s3\.amazonaws\.com/); 
+	if (_match) {
+		bucket = _match[1];
+	} else {
+		bucket = host;
+	}
 
 	if (!opts.headers) {
 		opts.headers = {};
 	}
 
 	Object.keys(opts.headers).forEach(function(key) {
-		switch(key.toLowerCase()) {
+		var lcKey = key.toLowerCase();
+		switch(lcKey) {
 			case "date": 
 				date = opts.headers[key]; 
 				break;
@@ -83,18 +93,20 @@ AWSRestSigner.prototype.sign = function(opts) {
 				contentMd5 = opts.headers[key]; 
 				break;
 			default:
-				if("x-amz-" === key.slice(0, 6)) {
-					xAmzHeaders[key] = opts.headers[key];
+				if("x-amz-" === lcKey.slice(0, 6)) {
+					xAmzHeaders[lcKey] = opts.headers[key];
 				}
 				break;
 		}
 	});
 
-	if(!date) {
-		date = opts.headers.date = new Date().toUTCString();
+	if (!date) {
+		date = new Date().toUTCString();
 	}
 	
-	opts.headers["Authorization"] = this._sign(method, bucket, path, date, contentType, contentMd5, xAmzHeaders);
+	var auth = this._sign(method, bucket, path, date, contentType, contentMd5, xAmzHeaders);
+	opts.headers["Authorization"] = auth;
+	return auth;
 }
 
 
