@@ -12,21 +12,22 @@ exports['main'] = function(test) {
 	test.expect(9);
 
 	var signer = new AwsSign(credentials);
-	var auth;
+	var opts;
 
 	// Example Object GET
-	auth = signer.sign({
+	opts = {
 		method: 'GET', 
 		host: 'johnsmith.s3.amazonaws.com',
 		path: '/photos/puppy.jpg',  
 		headers: {
 			date: 'Tue, 27 Mar 2007 19:36:42 +0000'
 		}
-	});
-	test.equal(auth, 'AWS AKIAIOSFODNN7EXAMPLE:bWq2s1WEIj+Ydj0vQ697zp+IXMU=');
+	}
+	signer.sign(opts);
+	test.equal(opts.headers["Authorization"], 'AWS AKIAIOSFODNN7EXAMPLE:bWq2s1WEIj+Ydj0vQ697zp+IXMU=');
 
 	// Example Object PUT
-	auth = signer.sign({
+	opts = {
 		method: 'PUT', 
 		host: 'johnsmith.s3.amazonaws.com',
 		path: '/photos/puppy.jpg', 
@@ -34,45 +35,49 @@ exports['main'] = function(test) {
 			date: 'Tue, 27 Mar 2007 21:15:45 +0000', 
 			'content-type': 'image/jpeg'
 		}
-	});
-	test.equal(auth, 'AWS AKIAIOSFODNN7EXAMPLE:MyyxeRY7whkBe+bq8fHCL/2kKUg=');
+	};
+	signer.sign(opts);
+	test.equal(opts.headers["Authorization"], 'AWS AKIAIOSFODNN7EXAMPLE:MyyxeRY7whkBe+bq8fHCL/2kKUg=');
 
 	// Example List
-	auth = signer.sign({
+	opts = {
 		method: 'GET', 
 		host: 'johnsmith.s3.amazonaws.com',
 		path: '/?prefix=photos&max-keys=50&marker=puppy',  
 		headers: {
 			date: 'Tue, 27 Mar 2007 19:42:41 +0000'
 		}
-	});
-	test.equal(auth, 'AWS AKIAIOSFODNN7EXAMPLE:htDYFYduRNen8P9ZfE/s9SuKy0U=');
+	}
+	signer.sign(opts);
+	test.equal(opts.headers["Authorization"], 'AWS AKIAIOSFODNN7EXAMPLE:htDYFYduRNen8P9ZfE/s9SuKy0U=');
 
 	// Example Fetch
-	auth = signer.sign({
+	opts = {
 		method: 'GET', 
 		host: 'johnsmith.s3.amazonaws.com',
 		path: '/?acl',  
 		headers: {
 			date: 'Tue, 27 Mar 2007 19:44:46 +0000'
 		}
-	});
-	test.equal(auth, 'AWS AKIAIOSFODNN7EXAMPLE:c2WLPFtWHVgbEmeEG93a4cG37dM=');
+	}
+	signer.sign(opts);
+	test.equal(opts.headers["Authorization"], 'AWS AKIAIOSFODNN7EXAMPLE:c2WLPFtWHVgbEmeEG93a4cG37dM=');
 
 	// Example List All My Buckets
-	auth = signer.sign({
+	opts = {
 		method: 'GET',
 		bucket: '',
 		path: '/',
 		headers: {
 			date: 'Wed, 28 Mar 2007 01:29:59 +0000'
 		}
-	});
-	test.equal(auth, 'AWS AKIAIOSFODNN7EXAMPLE:qGdzdERIC03wnaRNKh6OqZehG9s=');
+	}
+	signer.sign(opts);
+	test.equal(opts.headers["Authorization"], 'AWS AKIAIOSFODNN7EXAMPLE:qGdzdERIC03wnaRNKh6OqZehG9s=');
 
 	// Example Delete
 	// The following is deliberately left here to illustrate that it won't work (see README.md):
-	auth = signer.sign({
+	opts = {
 		method: 'DELETE', 
 		host: 'johnsmith.s3.amazonaws.com',
 		path: '/photos/puppy.jpg',  
@@ -80,21 +85,23 @@ exports['main'] = function(test) {
 			date: 'Tue, 27 Mar 2007 21:20:27 +0000',
 			'x-amz-date': 'Tue, 27 Mar 2007 21:20:26 +0000'
 		}
-	});
-	test.ok(auth!='AWS AKIAIOSFODNN7EXAMPLE:9b2sXq0KfxsxHtdZkzx/9Ngqyh8=');
+	}
+	signer.sign(opts);
+	test.ok(opts.headers["Authorization"]!='AWS AKIAIOSFODNN7EXAMPLE:9b2sXq0KfxsxHtdZkzx/9Ngqyh8=');
 
 	// Example Unicode Keys
-	auth = signer.sign({
+	opts = {
 		method: 'GET', 
 		host: 'dictionary.s3.amazonaws.com',
 		path: '/fran%C3%A7ais/pr%c3%a9f%c3%a8re',  
 		headers: {
 			date: 'Wed, 28 Mar 2007 01:49:49 +0000'
 		}
-	});
-	test.equal(auth, 'AWS AKIAIOSFODNN7EXAMPLE:DNEZGsoieTZ92F3bUfSPQcbGmlM=');
+	}
+	signer.sign(opts);
+	test.equal(opts.headers["Authorization"], 'AWS AKIAIOSFODNN7EXAMPLE:DNEZGsoieTZ92F3bUfSPQcbGmlM=');
 
-	auth = signer.sign({
+	opts = {
 		method: 'PUT',
 		host: 'static.johnsmith.net',
 		path: '/db-backup.dat.gz',
@@ -107,11 +114,12 @@ exports['main'] = function(test) {
 			'X-Amz-Meta-FileChecksum': '0x02661779',
 			'X-Amz-Meta-ChecksumAlgorithm': 'crc32',
 		}
-	});
-	test.equal(auth, 'AWS AKIAIOSFODNN7EXAMPLE:ilyl83RwaSoYIEdixDQcA4OnAnc=');
+	}
+	signer.sign(opts);
+	test.equal(opts.headers["Authorization"], 'AWS AKIAIOSFODNN7EXAMPLE:ilyl83RwaSoYIEdixDQcA4OnAnc=');
 
 	// No date specified
-	auth = {
+	opts = {
 		method: 'PUT', 
 		host: 'johnsmith.s3.amazonaws.com',
 		path: '/photos/puppy.jpg', 
@@ -119,8 +127,8 @@ exports['main'] = function(test) {
 			// No date
 		}
 	};
-	signer.sign(auth);
-	test.ok(auth.headers.date);
+	signer.sign(opts);
+	test.ok(opts.headers.date);
 
 	test.done();
 };
