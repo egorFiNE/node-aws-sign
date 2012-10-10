@@ -9,7 +9,7 @@ var credentials = {
 
 // main test suite as per http://docs.amazonwebservices.com/AmazonS3/latest/dev/RESTAuthentication.html#ConstructingTheAuthenticationHeader
 exports['main'] = function(test) {
-	test.expect(8);
+	test.expect(9);
 
 	var signer = new AwsSign(credentials);
 	var auth;
@@ -109,6 +109,18 @@ exports['main'] = function(test) {
 		}
 	});
 	test.equal(auth, 'AWS AKIAIOSFODNN7EXAMPLE:ilyl83RwaSoYIEdixDQcA4OnAnc=');
+
+	// No date specified
+	auth = {
+		method: 'PUT', 
+		host: 'johnsmith.s3.amazonaws.com',
+		path: '/photos/puppy.jpg', 
+		headers: {
+			// No date
+		}
+	};
+	signer.sign(auth);
+	test.ok(auth.headers.date);
 
 	test.done();
 };

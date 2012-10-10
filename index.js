@@ -102,6 +102,7 @@ AWSRestSigner.prototype.sign = function(opts) {
 
 	if (!date) {
 		date = new Date().toUTCString();
+		opts.headers.date = date;
 	}
 	
 	var auth = this._sign(method, bucket, path, date, contentType, contentMd5, xAmzHeaders);
