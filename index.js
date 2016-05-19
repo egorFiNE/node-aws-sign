@@ -64,7 +64,7 @@ AWSRestSigner.prototype.sign = function(opts) {
 	var
 		method = opts.method,
 		host = opts.host || '',
-		path = opts.path,
+		path = opts.path || opts.pathname,
 		xAmzHeaders = {},
 		date, contentType, contentMd5,
 		bucket = "";

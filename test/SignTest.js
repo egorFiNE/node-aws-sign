@@ -30,7 +30,7 @@ exports['main'] = function(test) {
 	opts = {
 		method: 'PUT', 
 		host: 'johnsmith.s3.amazonaws.com',
-		path: '/photos/puppy.jpg', 
+		pathname: '/photos/puppy.jpg',
 		headers: {
 			date: 'Tue, 27 Mar 2007 21:15:45 +0000', 
 			'content-type': 'image/jpeg'
