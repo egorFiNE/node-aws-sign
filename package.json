@@ -4,6 +4,9 @@
 	"version": "0.1.1",
 	"author": "Egor Egorov <me@egorfine.com>",
 	"homepage": "https://github.com/egorFiNE/node-aws-sign",
+	"scripts": {
+		"test": "nodeunit"
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/egorFiNE/node-aws-sign.git"
