@@ -1,17 +1,19 @@
 {
 	"name": "aws-sign",
 	"description": "Calculates Authorization header for Amazon AWS REST requests",
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"author": "Egor Egorov <me@egorfine.com>",
 	"homepage": "https://github.com/egorFiNE/node-aws-sign",
 	"scripts": {
-		"test": "nodeunit"
+		"test": "mocha test",
+		"lint": "eslint index.js"
 	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/egorFiNE/node-aws-sign.git"
 	},
 	"devDependencies": {
-		"nodeunit": ">= 0.6.0"
+		"eslint": "^5.2.0",
+		"mocha": "^5.2.0"
 	}
 }
