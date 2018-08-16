@@ -54,6 +54,12 @@ Use a single header instead:
 
 	npm install aws-sign
 
+## Versions and changelog
+
+1.x and forward are ES6 based.
+
+I have failed to maintain a proper versioning of this package for all old versions 0.x. The 0.2.1 was an ES6 based version published in 0.x by mistake. It has been deprecated.
+
 ## Author
 
 Egor Egorov, me@egorfine.com.
