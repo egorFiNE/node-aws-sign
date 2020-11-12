@@ -96,7 +96,7 @@ class AWSRestSigner {
 					break;
 
 				default:
-					if(lcKey.slice(0, 6) == "x-amz-") {
+					if(lcKey.startsWith('x-amz-')) {
 						xAmzHeaders[lcKey] = opts.headers[key];
 					}
 					break;
