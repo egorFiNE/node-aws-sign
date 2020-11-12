@@ -77,25 +77,25 @@ class AWSRestSigner {
 			opts.headers = {};
 		}
 
-		for (const key of Object.keys(opts.headers)) {
+		for (const [ key, value ] of Object.entries(opts.headers)) {
 			const lcKey = key.toLowerCase();
 
 			switch(lcKey) {
 				case 'date':
-					date = opts.headers[key];
+					date = value;
 					break;
 
 				case 'content-type':
-					contentType = opts.headers[key];
+					contentType = value;
 					break;
 
 				case 'content-md5':
-					contentMd5 = opts.headers[key];
+					contentMd5 = value;
 					break;
 
 				default:
-					if(lcKey.startsWith('x-amz-')) {
-						xAmzHeaders[lcKey] = opts.headers[key];
+					if (lcKey.startsWith('x-amz-')) {
+						xAmzHeaders[lcKey] = value;
 					}
 					break;
 			}
