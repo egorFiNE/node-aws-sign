@@ -22,7 +22,6 @@ class AWSRestSigner {
 			}
 
 			return Object.keys(lcHeaders)
-				.map(header => header.toLowerCase())
 				.sort()
 				.map(header => header + ':' + lcHeaders[header] + '\n')
 				.join('');
