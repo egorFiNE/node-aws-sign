@@ -14,10 +14,10 @@ class AWSRestSigner {
 	static canonizeAwzHeaders(xAmzHeaders) {
 		if (xAmzHeaders) {
 			const lcHeaders = {};
-			for (const header of Object.keys(xAmzHeaders)) {
-				const h = header.toLowerCase();
-				if (h != 'x-amz-date')  {
-					lcHeaders[h] = xAmzHeaders[header];
+			for (const [ header, value ] of Object.entries(xAmzHeaders)) {
+				const lcHeader = header.toLowerCase();
+				if (lcHeader != 'x-amz-date')  {
+					lcHeaders[lcHeader] = value;
 				}
 			}
 
