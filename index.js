@@ -156,6 +156,22 @@ class AWSRestSigner {
 	}
 }
 
-AWSRestSigner.subResources = ['acl', 'lifecycle', 'location', 'logging', 'notification', 'partNumber', 'policy', 'requestPayment', 'torrent', 'uploadId', 'uploads', 'versionId', 'versioning', 'versions', 'website'];
+AWSRestSigner.subResources = [
+	'acl',
+	'lifecycle',
+	'location',
+	'logging',
+	'notification',
+	'partNumber',
+	'policy',
+	'requestPayment',
+	'torrent',
+	'uploadId',
+	'uploads',
+	'versionId',
+	'versioning',
+	'versions',
+	'website'
+];
 
 module.exports = AWSRestSigner;
