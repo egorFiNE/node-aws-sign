@@ -111,10 +111,10 @@ class AWSRestSigner {
 
 
 	_sign(method, bucket, path, date, contentType, contentMd5, xAmzHeaders) {
-		const qPos = path.indexOf('?');
 		let queryToSign = '';
-
 		let _path = path;
+
+		const qPos = path.indexOf('?');
 		if (qPos >= 0) {
 			const queryPart = path.substr(qPos + 1);
 			_path = path.substr(0, qPos);
