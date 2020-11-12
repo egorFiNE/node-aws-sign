@@ -32,7 +32,7 @@ Others are optional. A date header (`headers.date`) will be added for you if it 
 
 ## Non-goals
 
-Node.js has no legacy ;-) so there is no need to support some legacy features of Amazon API for older software. I.e. there is no support for path-style bucket access.
+There is no support for path-style bucket access.
 
 `x-amz-date` substitution is not supported because Node's http module has no problems setting `Date` header.
 
@@ -53,12 +53,6 @@ Use a single header instead:
 ## Installation
 
 	npm install aws-sign
-
-## Versions and changelog
-
-1.x and forward are ES6 based.
-
-I have failed to maintain a proper versioning of this package for all old versions 0.x. The 0.2.1 was an ES6 based version published in 0.x by mistake. It has been deprecated.
 
 ## Author
 
