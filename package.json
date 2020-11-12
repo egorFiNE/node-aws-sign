@@ -3,6 +3,7 @@
 	"description": "Calculates Authorization header for Amazon AWS REST requests",
 	"version": "1.0.0",
 	"author": "Egor Egorov <me@egorfine.com>",
+	"license": "MIT",
 	"homepage": "https://github.com/egorFiNE/node-aws-sign",
 	"scripts": {
 		"test": "mocha test",
