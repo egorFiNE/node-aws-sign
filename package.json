@@ -1,7 +1,7 @@
 {
 	"name": "aws-sign",
 	"description": "Calculates Authorization header for Amazon AWS REST requests",
-	"version": "1.0.0",
+	"version": "1.0.1-beta.0",
 	"author": "Egor Egorov <me@egorfine.com>",
 	"license": "MIT",
 	"homepage": "https://github.com/egorFiNE/node-aws-sign",
