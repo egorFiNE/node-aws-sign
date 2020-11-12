@@ -13,7 +13,7 @@
 		"url": "https://github.com/egorFiNE/node-aws-sign.git"
 	},
 	"devDependencies": {
-		"eslint": "^5.2.0",
-		"mocha": "^5.2.0"
+		"eslint": "^7.13.0",
+		"mocha": "^8.2.1"
 	}
 }
