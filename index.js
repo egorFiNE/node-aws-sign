@@ -24,7 +24,7 @@ class AWSRestSigner {
 			return Object.keys(lcHeaders)
 				.map(header => header.toLowerCase())
 				.sort()
-				.map(header => header + ':' + lcHeaders[header] + "\n")
+				.map(header => header + ':' + lcHeaders[header] + '\n')
 				.join('');
 		}
 
@@ -47,12 +47,12 @@ class AWSRestSigner {
 			const queryToSign = subresources.map(param => {
 				let result = param;
 				if (query[param] != '') {
-					result += "=" + query[param];
+					result += '=' + query[param];
 				}
 				return result;
 			});
 
-			return "?" + queryToSign.join("&");
+			return '?' + queryToSign.join('&');
 		}
 
 		return '';
@@ -63,8 +63,9 @@ class AWSRestSigner {
 			host = opts.host || '',
 			path = opts.path || opts.pathname,
 			xAmzHeaders = {};
+
 		let
-			date=null, contentType=null, contentMd5=null,
+			date = null, contentType = null, contentMd5 = null,
 			bucket = "";
 
 		const _match = host.match(/^(.*)\.s3\.amazonaws\.com/);
@@ -82,15 +83,15 @@ class AWSRestSigner {
 			const lcKey = key.toLowerCase();
 
 			switch(lcKey) {
-				case "date":
+				case 'date':
 					date = opts.headers[key];
 					break;
 
-				case "content-type":
+				case 'content-type':
 					contentType = opts.headers[key];
 					break;
 
-				case "content-md5":
+				case 'content-md5':
 					contentMd5 = opts.headers[key];
 					break;
 
@@ -107,7 +108,7 @@ class AWSRestSigner {
 			opts.headers.date = date;
 		}
 
-		opts.headers["Authorization"] = this._sign(method, bucket, path, date, contentType, contentMd5, xAmzHeaders);
+		opts.headers['Authorization'] = this._sign(method, bucket, path, date, contentType, contentMd5, xAmzHeaders);
 	}
 
 
@@ -125,31 +126,31 @@ class AWSRestSigner {
 		const canonicalizedAmzHeaders = AWSRestSigner.canonizeAwzHeaders(xAmzHeaders);
 
 		let canonicalizedResource = '';
-		if (bucket!='') {
-			canonicalizedResource += '/'+bucket;
+		if (bucket != '') {
+			canonicalizedResource += '/' + bucket;
 		}
 		canonicalizedResource += _path + queryToSign;
 
-		let stringToSign = method + "\n";
+		let stringToSign = method + '\n';
 		if (contentMd5) {
 			stringToSign += contentMd5;
 		}
-		stringToSign += "\n";
+		stringToSign += '\n';
 
 		if (contentType) {
 			stringToSign += contentType;
 		}
-		stringToSign += "\n";
+		stringToSign += '\n';
 
 		stringToSign +=
-			date + "\n" +
+			date + '\n' +
 			canonicalizedAmzHeaders +
 			canonicalizedResource;
 
 		if (this.debug) {
-			console.log("-----------");
-			console.log(stringToSign.replace(/\n/g, "\\n\n"));
-			console.log("-----------");
+			console.log('-----------');
+			console.log(stringToSign.replace(/\n/g, '\\n\n'));
+			console.log('-----------');
 		}
 
 		return 'AWS ' + this.accessKeyId + ':' + crypto.createHmac('sha1', this.secretAccessKey).update(stringToSign).digest('base64');
