@@ -117,7 +117,7 @@ class AWSRestSigner {
 
 		let _path = path;
 		if (qPos >= 0) {
-			const queryPart = path.substr(qPos + 1, path.length);
+			const queryPart = path.substr(qPos + 1);
 			_path = path.substr(0, qPos);
 			queryToSign = AWSRestSigner.extractSubResources(queryPart);
 		}
