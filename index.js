@@ -40,21 +40,20 @@ class AWSRestSigner {
 			}
 		}
 
-		if (subresources.length) {
-			subresources.sort();
-
-			const queryToSign = subresources.map(param => {
-				let result = param;
-				if (query[param] != '') {
-					result += '=' + query[param];
-				}
-				return result;
-			});
-
-			return '?' + queryToSign.join('&');
+		if (subresources.length <= 0) {
+			return '';
 		}
 
-		return '';
+		subresources.sort();
+
+		const queryToSign = subresources.map(param => {
+			if (query[param] != '') {
+				return param + '=' + query[param];
+			}
+			return param; // FIXME do we really need to return this part as param namae with no '=' ?
+		});
+
+		return '?' + queryToSign.join('&');
 }
 
 	sign(opts) {
